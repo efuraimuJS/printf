@@ -1,37 +1,49 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdarg.h> /* va_list */
-#include <stdlib.h> /* malloc, free */
-#include <unistd.h> /* write */
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <limits.h>
+#include <unistd.h>
 
-/* helper functions */
-char* (*get_func(char i))(va_list);
-char *create_buffer(void);
-void write_buffer(char *buffer, int len, va_list list);
-char *_strcpy(char *dest, char *src);
-int _strlen(char *s);
 
-/* printf functions */
-int _printf(const char *format, ...);
-char *print_s(va_list list);
-char *print_c(va_list list);
-char *print_d(va_list list);
-char *itob(va_list list);
-char *rot13(va_list list);
-char *rev_string(va_list list);
-char *itoOctal(va_list list);
 
 /**
- * struct types - struct
- * @id: identifier of type to print (e.g. c means char)
- * @func: ptr to functions that print according to identifier (e.g. print_c)
+ * struct format - match the conversion specifiers for printf
+ * @id: type char pointer of the specifier i.e (l, h) for (d, i, u, o, x, X)
+ * @f: type pointer to function for the conversion specifier
+ *
  */
 
-typedef struct types
+typedef struct format
 {
-  char id;
-  char* (*func)(va_list);
-} print;
+  char *id;
+  int (*f)();
+} convert_match;
+
+int printf_pointer(va_list val);
+int printf_hex_aux(unsigned long int num);
+int printf_HEX_aux(unsigned int num);
+int printf_exclusive_string(va_list val);
+int printf_HEX(va_list val);
+int printf_hex(va_list val);
+int printf_oct(va_list val);
+int printf_unsigned(va_list args);
+int printf_bin(va_list val);
+int printf_srev(va_list args);
+int printf_rot13(va_list args);
+int printf_int(va_list args);
+int printf_dec(va_list args);
+int _strlen(char *s);
+int *_strcpy(char *dest, char *src);
+int _strlenc(const char *s);
+int rev_string(char *s);
+int _strlenc(const char *s);
+int printf_37(void);
+int printf_char(va_list val);
+int printf_string(va_list val);
+int _putchar(char c);
+int _printf(const char *format, ...);
 
 #endif
